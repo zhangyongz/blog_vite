@@ -1,25 +1,44 @@
 <template>
-  <div class="public_box" :class="{active: sliderShow}">
+  <div
+    class="public_box"
+    :class="{active: sliderShow}"
+  >
     <div class="content">
       <div class="wrapper">
         <header class="header">
           <div class="container">
             <!-- <router-link to="/" tag="h1" class="name">章勇的博客</router-link> -->
             <nav class="nav">
-              <router-link to="/" class="item" replace>
-                <i class="iconfont icon-home"></i>
+              <router-link
+                to="/"
+                class="item"
+                replace
+              >
+                <i class="iconfont icon-home" />
                 <span class="nav_name">首页</span>
               </router-link>
-              <router-link to="/CategoryArticle" class="item" replace>
-                <i class="iconfont icon-category"></i>
+              <router-link
+                to="/CategoryArticle"
+                class="item"
+                replace
+              >
+                <i class="iconfont icon-category" />
                 <span class="nav_name">分类</span>
               </router-link>
-              <router-link to="/Archives" class="item" replace>
-                <i class="iconfont icon-collect"></i>
+              <router-link
+                to="/Archives"
+                class="item"
+                replace
+              >
+                <i class="iconfont icon-collect" />
                 <span class="nav_name">归档</span>
               </router-link>
-              <router-link to="/TagArticle" class="item" replace>
-                <i class="iconfont icon-tag"></i>
+              <router-link
+                to="/TagArticle"
+                class="item"
+                replace
+              >
+                <i class="iconfont icon-tag" />
                 <span class="nav_name">标签</span>
               </router-link>
               <!-- <a class="item">
@@ -33,44 +52,84 @@
             </nav>
           </div>
         </header>
-        <router-view class="view_box"></router-view>
+        <router-view class="view_box" />
       </div>
 
-      <div class="sidebar_toggle" :class="{active: sliderShow}" @click="sliderShow = !sliderShow">
-        <span class="line top"></span>
-        <span class="line middle"></span>
-        <span class="line bottom"></span>
+      <div
+        class="sidebar_toggle"
+        :class="{active: sliderShow}"
+        @click="sliderShow = !sliderShow"
+      >
+        <span class="line top" />
+        <span class="line middle" />
+        <span class="line bottom" />
       </div>
 
-      <div class="to_top" :class="{active: showGoTop}" @click="goTopAction">
-        <i class="iconfont icon-up"></i>
+      <div
+        class="to_top"
+        :class="{active: showGoTop}"
+        @click="goTopAction"
+      >
+        <i class="iconfont icon-up" />
       </div>
 
       <footer class="footer">
-        <a href="http://www.beian.miit.gov.cn" target="_blank">皖ICP备18005474号</a>
+        <a
+          href="http://www.beian.miit.gov.cn"
+          target="_blank"
+        >皖ICP备18005474号</a>
         <!-- © 2020
         <i class="iconfont icon-love"></i> zhangyong -->
       </footer>
     </div>
 
     <transition name="slider">
-      <div class="slider" v-show="sliderShow">
+      <div
+        v-show="sliderShow"
+        class="slider"
+      >
         <div class="img">
-          <img src="../../assets/img/avatar.jpg" alt="">
+          <img
+            src="../../assets/img/avatar.jpg"
+            alt=""
+          >
         </div>
-        <p class="name">zhangyong</p>
+        <p class="name">
+          zhangyong
+        </p>
         <div class="site">
-          <router-link to="/Archives" class="item">
-            <p class="count">{{countInfo.article}}</p>
-            <p class="site_name">日志</p>
+          <router-link
+            to="/Archives"
+            class="item"
+          >
+            <p class="count">
+              {{ countInfo.article }}
+            </p>
+            <p class="site_name">
+              日志
+            </p>
           </router-link>
-          <router-link to="/CategoryArticle" class="item">
-            <p class="count">{{countInfo.category}}</p>
-            <p class="site_name">分类</p>
+          <router-link
+            to="/CategoryArticle"
+            class="item"
+          >
+            <p class="count">
+              {{ countInfo.category }}
+            </p>
+            <p class="site_name">
+              分类
+            </p>
           </router-link>
-          <router-link to="/TagArticle" class="item">
-            <p class="count">{{countInfo.tag}}</p>
-            <p class="site_name">标签</p>
+          <router-link
+            to="/TagArticle"
+            class="item"
+          >
+            <p class="count">
+              {{ countInfo.tag }}
+            </p>
+            <p class="site_name">
+              标签
+            </p>
           </router-link>
         </div>
       </div>
@@ -80,64 +139,64 @@
 
 <script lang="ts">
 import {
-  defineComponent, ref, onUnmounted, reactive,
-} from 'vue';
-import { getCount } from '@/commons/api';
+  defineComponent, ref, onUnmounted, reactive
+} from 'vue'
+import { getCount } from '@/commons/api'
 
 export default defineComponent({
   name: 'Public',
-  setup() {
-    const showGoTop = ref(false);
-    function scrollHandle() {
+  setup () {
+    const showGoTop = ref(false)
+    function scrollHandle () {
       if (window.scrollY > 50) {
-        showGoTop.value = true;
+        showGoTop.value = true
       } else {
-        showGoTop.value = false;
+        showGoTop.value = false
       }
     }
-    window.addEventListener('scroll', scrollHandle);
+    window.addEventListener('scroll', scrollHandle)
     onUnmounted(() => {
-      window.removeEventListener('scroll', scrollHandle);
-    });
+      window.removeEventListener('scroll', scrollHandle)
+    })
 
-    const timer = ref<number | undefined>(undefined);
-    function goTopAction() {
-      timer.value = undefined;
-      timer.value = setTimeout(() => {
-        const oTop = document.body.scrollTop || document.documentElement.scrollTop;
+    const timer = ref<number | undefined>(undefined)
+    function goTopAction () {
+      timer.value = undefined
+      timer.value = window.setTimeout(() => {
+        const oTop = document.body.scrollTop || document.documentElement.scrollTop
         if (oTop > 0) {
-          window.scrollTo(0, oTop - 50);
-          goTopAction();
+          window.scrollTo(0, oTop - 50)
+          goTopAction()
         } else {
-          clearTimeout(timer.value);
+          clearTimeout(timer.value)
         }
-      }, 10);
+      }, 10)
     }
 
     let countInfo = reactive({
       article: 0,
       category: 0,
-      tag: 0,
-    });
-    function getCountHandle() {
+      tag: 0
+    })
+    function getCountHandle () {
       getCount().then((res) => {
         if (res.data.reCode === 200) {
-          countInfo = res.data.result;
+          countInfo = res.data.result
         }
-      });
+      })
     }
-    getCountHandle();
+    getCountHandle()
 
-    const sliderShow = ref(false);
+    const sliderShow = ref(false)
 
     return {
       showGoTop,
       sliderShow,
       countInfo,
-      goTopAction,
-    };
-  },
-});
+      goTopAction
+    }
+  }
+})
 </script>
 
 <style lang="less">
